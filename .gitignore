@@ -1,0 +1,6 @@
+tuning2/
+.vscode
+__pycache__/
+*.keras
+*.h5
+*.hdf5

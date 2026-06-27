@@ -14,8 +14,13 @@ TOKENIZER_PATH = "tokenizer.pickle"
 MAXLEN = 200
 
 
-def ensure_nltk_data() -> None:
-    resources = (("punkt", "tokenizers/punkt"),)
+
+def ensure_nltk_data():
+    resources = [
+        ("punkt", "tokenizers/punkt"),
+        ("punkt_tab", "tokenizers/punkt_tab"),
+    ]
+
     for resource_name, resource_path in resources:
         try:
             nltk.data.find(resource_path)

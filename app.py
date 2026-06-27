@@ -2,6 +2,8 @@ import pickle
 import re
 import nltk
 import streamlit as st
+import os
+import gdown
 from nltk.tokenize import word_tokenize
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -21,12 +23,22 @@ def ensure_nltk_data() -> None:
             nltk.download(resource_name, quiet=True)
 
 
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        file_id = "1YB5LHdseennYWiCxhIbHd-MFjrWRWp9o"
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, MODEL_PATH, quiet=False)
+
 @st.cache_resource
 def load_artifacts():
     ensure_nltk_data()
+    download_model()  # Download model if missing
+
     model = load_model(MODEL_PATH)
+
     with open(TOKENIZER_PATH, "rb") as file_handle:
         tokenizer = pickle.load(file_handle)
+
     return model, tokenizer
 
 
